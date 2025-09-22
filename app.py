@@ -228,9 +228,6 @@ def create_confusion_matrix_heatmap(model_name):
 
 # Main app
 def main():
-    # Header
-    st.markdown("Upload an image of a potato leaf to detect diseases using our advanced AI models.")
-    
     # Sidebar for navigation
     st.sidebar.title("Navigation")
     app_mode = st.sidebar.radio("Choose a section:", 
@@ -246,47 +243,23 @@ def main():
         show_about()
 
 def show_home():
-    st.markdown('<p class="sub-header">Welcome to Potato Disease Detection</p>', unsafe_allow_html=True)
-    
-    col1, col2 = st.columns([2, 1])
-    
-    with col1:
-        st.write("""
-        This application uses state-of-the-art deep learning models to detect and classify 
-        diseases in potato plants. Early detection of plant diseases can significantly 
-        reduce crop losses and improve yield quality.
-        
-        ### Features:
-        - **Multiple Model Support**: Choose between Xception, InceptionV3, and MobileNetV2
-        - **High Accuracy**: Models trained on thousands of potato leaf images
-        - **Detailed Analysis**: Get disease information and treatment recommendations
-        - **Performance Comparison**: Compare different model performances
-        """)
-    
-    with col2:
-        st.image("https://cdn-icons-png.flaticon.com/512/2916/2916439.png", width=150)
-    
     # Quick stats
-    st.markdown("### Model Performance Overview")
-    col1, col2, col3 = st.columns(3)
-    
-    with col1:
-        st.markdown('<div class="metric-card">', unsafe_allow_html=True)
-        st.metric("Xception Accuracy", f"{MODEL_PERFORMANCE['Xception']['accuracy']*100:.2f}%")
-        st.markdown('</div>', unsafe_allow_html=True)
-    
-    with col2:
-        st.markdown('<div class="metric-card">', unsafe_allow_html=True)
-        st.metric("InceptionV3 Accuracy", f"{MODEL_PERFORMANCE['InceptionV3']['accuracy']*100:.2f}%")
-        st.markdown('</div>', unsafe_allow_html=True)
-    
-    with col3:
-        st.markdown('<div class="metric-card">', unsafe_allow_html=True)
-        st.metric("MobileNetV2 Accuracy", f"{MODEL_PERFORMANCE['MobileNetV2']['accuracy']*100:.2f}%")
-        st.markdown('</div>', unsafe_allow_html=True)
-    
-    # Performance chart
-    st.plotly_chart(create_performance_barchart(), use_container_width=True)
+    st.markdown('<div style="text-align:center; margin-top:30px;">'
+                '<img src="https://marketplace.canva.com/ARZ8E/MAFmAUARZ8E/1/tl/canva-natural-leaf-icon.-100%25-naturals-vector-image-MAFmAUARZ8E.png" style="width:96px;">'
+                '<h1 class="main-header">Potato Disease Detector</h1>'
+                '<h3 class="sub-header">AI-powered early detection for healthier crops</h3>'
+                '</div>', unsafe_allow_html=True)
+
+    uploaded_file = st.file_uploader("Upload a potato leaf image", type=["jpg", "jpeg", "png"], key="home_upload")
+    st.markdown("""
+            </div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    if uploaded_file is not None:
+        image = Image.open(uploaded_file)
+        st.image(image, caption="Uploaded Image", use_container_width=True)
 
 def show_detection():
     st.markdown('<p class="sub-header">Potato Disease Detection</p>', unsafe_allow_html=True)
